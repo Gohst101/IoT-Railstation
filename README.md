@@ -19,6 +19,8 @@ While we did not win, we gained something even more valuable: **experience, idea
 
 The goal of this repository is to turn that original project into a growing **open-source platform** for smart railway automation, interactive station systems, and IoT-based train control.
 
+Main Support for Lego Trains and Model trains. But you also add your own Trains. Just do as much as you need and create 3D Prints for Hardware Support or Build an extra System.
+
 I mean, who doesn't like trains?
 
 ---
