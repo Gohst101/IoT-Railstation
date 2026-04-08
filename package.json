@@ -1,0 +1,37 @@
+{
+  "name": "iot-railstation",
+  "version": "1.0.0",
+  "description": "This is a Project to make Toy Trains Smarter",
+  "homepage": "https://github.com/Gohst101/IoT-Railstation#readme",
+  "bugs": {
+    "url": "https://github.com/Gohst101/IoT-Railstation/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gohst101/IoT-Railstation.git"
+  },
+  "license": "MIT",
+  "author": "Heinke Hamjediers",
+  "type": "commonjs",
+  "main": "backend.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node backend.js",
+    "start": "node backend.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.1",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "mqtt": "^5.15.1",
+    "path": "^0.12.7",
+    "pem": "^1.14.8",
+    "session": "^0.1.0"
+  }
+}
