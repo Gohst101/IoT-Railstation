@@ -17,9 +17,9 @@ IoT-Railstation started as a school-based project after we were given the opport
 The project was later presented at **IdeenExpo 2026**.  
 While we did not win, we gained something even more valuable: **experience, ideas, technical knowledge, and motivation to keep building**.
 
-The goal of this repository is to turn that original project into a growing **open-source platform** for smart railway automation, interactive station systems, and IoT-based train control.
+The goal of this repository is to turn the original project into a growing **open-source platform** for smart railway automation, interactive station systems, and IoT-based train control.
 
-Main Support for Lego Trains and Model trains. But you also add your own Trains. Just do as much as you need and create 3D Prints for Hardware Support or Build an extra System.
+The main support is focused around LEGO® trains and model trains. But you can also integrate your own trains/(and or hardware) by designing specialized 3D printed mounts and/or developing sub-systems.
 
 I mean, who doesn't like trains?
 
