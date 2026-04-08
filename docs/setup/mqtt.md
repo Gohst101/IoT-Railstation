@@ -80,3 +80,10 @@ It allows devices like **ESP32 microcontrollers** to communicate with a central 
 - 2,4GHz Wlan
 
 ## Trouble Shooting
+
+Run Mosquitto Debug Mode
+   ```
+   mosquitto -v -c "C:\Program Files\Mosquitto\mosquitto.conf"
+   ```
+
+### Errors I have run into
