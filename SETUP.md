@@ -33,6 +33,11 @@ npm install dotenv ejs express express-session fs https mqtt path pem session
 npm init
 ```
 
+To start the WebServer you need to use this command
+```
+npm run start
+```
+
 
 
 ## Links
