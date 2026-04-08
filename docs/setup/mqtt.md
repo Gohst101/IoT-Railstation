@@ -87,3 +87,4 @@ Run Mosquitto Debug Mode
    ```
 
 ### Errors I have run into
+Esp32 cannot connect to the Broker -> Make sure your using 2.4GHz Wlan, that your Profile is set to "Private Network" in the "Settings/Network and Internet/Wlan/yourWlan"
