@@ -3,9 +3,8 @@
 This guide will help you set up the IoT-Railstation project, covering both hardware and software components.
 
 ## What you will need
-NodeJS: https://nodejs.org/en/download
-Git: https://git-scm.com/install
-VSC Extentions:
+NodeJS: https://nodejs.org/en/download \
+Git: https://git-scm.com/install 
 
 
 ## Getting the Project
@@ -37,10 +36,13 @@ To start the WebServer you need to use this command
 ```
 npm run start
 ```
+or
+```
+node backend.js
+```
 
 
-
-## Links
+## More Links
 - [MQTT Setup with Mosquitto (Windows only)](docs/setup/mqtt.md)
 - [Hardware Setup](docs/setup/hardware.md)
 - [Software Setup](docs/setup/software.md)
