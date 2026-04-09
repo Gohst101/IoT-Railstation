@@ -19,7 +19,7 @@ IoT-Railstation is an open IoT project focused on making toy trains smarter, mor
 
 IoT-Railstation started as a school-based project after we were given the opportunity to experiment with **microcontrollers** and **model railway systems**.
 
-The project was later presented at **IdeenExpo 2026**.  
+The project was later presented at **JugendForscht 2026**.  
 While we did not win, we gained something even more valuable: **experience, ideas, technical knowledge, and motivation to keep building**.
 
 The goal of this repository is to turn the original project into a growing **open-source platform** for smart railway automation, interactive station systems, and IoT-based train control.
