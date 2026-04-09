@@ -2,11 +2,16 @@
 
 IoT-Railstation is an open IoT project focused on making toy trains smarter, more interactive, and digitally connected.
 
+[Installation Guide](/INSTALL.md)
+
 ![Status](https://img.shields.io/badge/status-early%20development-blue)
 ![Platform](https://img.shields.io/badge/platform-ESP32-green)
 ![Language](https://img.shields.io/badge/language-C%2B%2B-orange)
 ![Protocol](https://img.shields.io/badge/protocol-MQTT-purple)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
+> [!IMPORTANT]
+> This Project is still in development.
 
 ---
 

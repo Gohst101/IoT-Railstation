@@ -1,4 +1,4 @@
-# Welcome to the Setup Guide
+# Welcome to the Installation Guide
 
 This guide will help you set up the IoT-Railstation project, covering both hardware and software components.
 
