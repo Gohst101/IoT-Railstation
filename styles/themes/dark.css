@@ -1,6 +1,16 @@
 :root {
-    --background-color: #121212;
-    --text-color: #ffffff;
-    --primary-color: #bb86fc;
-    --secondary-color: #03dac6;
+    --background-color: #131720;
+    
+    --text-color: #FFFFFF;
+    --primary-color: #7C7C7C;
+
+    --button-success-color: #1C7A00;
+    --button-warning-color: #C45F00;
+    --button-danger-color: #7A0E00;
+    --button-info-color: #004BC4;
+
+    --box-color: #1B212D;
+
+    --box-stroke-color: #2D3443;
+
 }
