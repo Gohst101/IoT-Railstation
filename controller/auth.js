@@ -3,7 +3,7 @@ const handleLogin = (req, res) => {
 
   // LA VALIDATION
   if (!username || !password) {
-    return res.status(400).render('public/auth', {
+    return res.status(400).render('public/login', {
       error: 'Benutzername und Passwort sind erforderlich.'
     });
   }
@@ -31,7 +31,7 @@ const handleLogin = (req, res) => {
   }
 
   console.log(`[Auth] ❌ Gescheiterte Anmeldung für Benutzer: ${username}`);
-  res.status(401).render('public/auth', {
+  res.status(401).render('public/login', {
     error: 'Ungültiger Benutzername oder Passwort.'
   });
 };
@@ -46,7 +46,7 @@ const handleLogout = (req, res) => {
     }
     console.log(`[Auth] ✅ Benutzer '${username}' erfolgreich abgemeldet`);
     res.clearCookie('connect.sid');
-    res.redirect('/auth');
+    res.redirect('/login');
   });
 };
 
