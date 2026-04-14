@@ -13,4 +13,16 @@
 
     --box-stroke-color: #2D3443;
 
+
+    --button-action-play: #2E8300;
+    --button-action-play-background: #15FF00; /* 10% Transparent */
+    --button-action-edit: #FF9500;
+    --button-action-edit-background: #FF9500; /* 10% Transparent */
+    --button-action-settings: #878787;
+    --button-action-settings-background: #FFFFFF; /* 10% Transparent */
+    --button-action-delete: #FF0000;
+    --button-action-delete-background: #FF0000; /* 10% Transparent */
+
+
+    
 }
