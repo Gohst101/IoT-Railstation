@@ -1,0 +1,28 @@
+:root {
+    --blur-amount: 6px;
+    --blur-speed: 180ms;
+}
+
+.blur-target {
+    transition: filter var(--blur-speed) ease;
+}
+
+.is-blurred {
+    filter: blur(var(--blur-amount));
+    pointer-events: none;
+    user-select: none;
+}
+:root {
+    --blur-amount: 12px;
+    --blur-speed: 180ms;
+}
+
+.blur-target {
+    transition: filter var(--blur-speed) ease;
+}
+
+.is-blurred {
+    filter: blur(var(--blur-amount));
+    pointer-events: none;
+    user-select: none;
+}
