@@ -1,5 +1,9 @@
 [
   {
+    "grid_X": "5000",
+    "grid_Y": "5000"
+  },
+  {
     "id": 1770721513958,
     "type": "switch_right",
     "deviceId": "ID_0001",
