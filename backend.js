@@ -92,18 +92,17 @@ function startMQTT() {
 }
 
 
-/* ##### Add later #####
 console.log(`[Startup Process] ⏳ Setting up API Endpoints..`)
 try {
 	app.use('/api/tracks', apiTracksRoutes);
-	app.use('/api/switch', apiSwitchRoutes(client));
-	app.use('/api/speed', apiSpeedRoutes(client));
+	//app.use('/api/switch', apiSwitchRoutes(client));
+	//app.use('/api/speed', apiSpeedRoutes(client));
 }
 catch (error) {
 	console.error(`[Startup Process] ❌ Error setting up API Endpoints:`, error)
 	return
 }
-*/
+
 
 
 console.log(`[Startup Process] ⏳ Setting up Routes..`)
