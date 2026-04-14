@@ -10,5 +10,10 @@ router.get('/dashboard', checkUserLoggedIn, (req, res) => {
   res.render('private/dashboard', { user: req.session.user });
 });
 
+// Tracks - INFO: Later add Loading Tracks via JSON Storage!!!
+router.get('/tracks', checkUserLoggedIn, (req, res) => {
+  res.render('private/tracks', { user: req.session.user });
+});
+
 
 module.exports = router;
