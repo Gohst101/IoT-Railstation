@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1770721513958,
+    "type": "switch_right",
+    "deviceId": "ID_0001",
+    "position": {
+      "gridX": 11,
+      "gridY": 5
+    },
+    "rotation": 0,
+    "status": "active",
+    "switchName": "Weiche 1",
+    "leftPin": 16,
+    "rightPin": 17
+  },
+  {
+    "id": 1770721517668,
+    "type": "switch_left",
+    "deviceId": "ID_0002",
+    "position": {
+      "gridX": 7,
+      "gridY": 5
+    },
+    "rotation": 0,
+    "status": "active",
+    "switchName": "Weiche 2",
+    "leftPin": 18,
+    "rightPin": 19
+  },
+  {
+    "id": 1770721526347,
+    "type": "straight",
+    "position": {
+      "gridX": 9,
+      "gridY": 5
+    },
+    "rotation": 0,
+    "status": "active"
+  }
+]
