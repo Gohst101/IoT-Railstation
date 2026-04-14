@@ -21,28 +21,35 @@ Daten die ich mitsenden möchte:
 */
 
 
+// Information used:
 // https://www.youtube.com/watch?v=OAoM5IV393o
+// https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/storage/nvs_flash.html
+// https://randomnerdtutorials.com/get-change-esp32-esp8266-mac-address-arduino/#esp32-get-mac-address
 
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
+#include <Preferences.h>
+
+Preferences prefs;
 
 // Einstellungen - Start
 // Wlan Informationen - INFO: Der ESP32 kann nur 2,4GH Unterstützen
-const char ssid[] = "WlanName";
-const char pass[] = "WlanPassword";
+
+const char ssid[] = "";
+const char pass[] = "";
 
 // MQTT Server Informationen
-const char* mqtt_server = "BrokerIP";
-const uint16_t mqtt_port = BrokerPort;
+const char* mqtt_server = mqtt_broker_ip";
+const uint16_t mqtt_port = 1883;
 // Only if you have used Authenthication in the Mosquitto Setup
 const char* mqtt_user = "myuser";
-const char* mqtt_pass = "myuserpassword";
+const char* mqtt_pass = "myuser";
 
 
 // Hier die Device ID ändern. Am besten den ESP32 makieren um diesen nicht zu verwecheln.
 // Die ID muss später in der Web Anwendung auch eingetragen werden um die Pins zu belegen.
-String device_id = ""; // Wird später ersetzt siehe https://github.com/Gohst101/IoT-Railstation/issues/2
+String deviceId; // Wurde ersetzt!!! Wird später ersetzt siehe https://github.com/Gohst101/IoT-Railstation/issues/2
 
 // Debug Pins - Nutzung nicht zwingend nötig, aber cool für 3D Prints als Anzeige des Moduls
 // Müssen ausgänge auf dem Esp32 sein. Je nach dem werden dann auf den Pins ein HIGH oder LOW Signal gesendet.
@@ -53,7 +60,7 @@ String device_id = ""; // Wird später ersetzt siehe https://github.com/Gohst101
 #define status_pin 27
 #define wlan_pin 26
 #define mqtt_pin 12
-bool use_status_led = true; // 1 oder 0 - An oder Aus, ob diese Pins genutzt werden sollen oder nicht. Standart aus.
+bool use_status_led = false; // 1 oder 0 - An oder Aus, ob diese Pins genutzt werden sollen oder nicht. Standart aus.
 int status_led_blink_time = 500; // Schnelligkiet der LED Blink abstände. Standart 500ms - Passt ganz gut
 // Einstellungen - Ende
 
@@ -72,10 +79,10 @@ String topic_error;
 // Funktion für Topics Setup
 void setupTopics() {
   Serial.println("Setting up Topics..");
-  topic_trigger = "track/device/" + device_id + "/trigger";
-  topic_status  = "track/device/" + device_id + "/status";
-  topic_ack     = "track/device/" + device_id + "/ack";
-  topic_error   = "track/device/" + device_id + "/error";
+  topic_trigger = "track/device/" + deviceId + "/trigger";
+  topic_status  = "track/device/" + deviceId + "/status";
+  topic_ack     = "track/device/" + deviceId + "/ack";
+  topic_error   = "track/device/" + deviceId + "/error";
   Serial.println("Done Setting up Topics"); // Später auflistung der Topics mit erweiterbarem Auflister
 }
 
@@ -132,15 +139,19 @@ void setup() {
     delay(500);
   }
 
-  // Topics
-  setupTopics();
-
   // MQTT Client
   client.setServer(mqtt_server, mqtt_port); // Niemals werde ich diese drecks Zeile wieder vergessen.. 3 Stunden Lebenszeit
   client.setCallback(callback); // Sorgt dafür das die funktion Callback bei neuen Daten eines Abonierten Paths ausgeführt wird
 
   // Wifi
   wifi_connection(); // Baue das Blinken der LED während der Verbindung ein
+
+  // Generate Custom Device ID
+  deviceId = getDeviceId();
+
+
+  // Topics
+  setupTopics();
 
   // MQTT
   mqtt_connection(); // Bearbeite das Verbindungsskript von MQTT, damit die Richtigen Topics Abonniert werden etc. Einmal nachprüfen
@@ -149,22 +160,6 @@ void setup() {
   // Gehe zu loop();
 }
 
-/*
-void loop() {
-  Serial.println("An");
-  digitalWrite(Weiche_1_R, HIGH);
-  digitalWrite(Weiche_1_L, HIGH);
-  digitalWrite(Weiche_2_R, HIGH);
-  digitalWrite(Weiche_2_L, HIGH);
-  delay(1000);
-  Serial.println("Aus");
-  digitalWrite(Weiche_1_R, LOW);
-  digitalWrite(Weiche_1_L, LOW);
-  digitalWrite(Weiche_2_R, LOW);
-  digitalWrite(Weiche_2_L, LOW);
-  delay(1000);
-}
-*/
 
 void loop() {
   if (WiFi.status() != WL_CONNECTED) {
@@ -184,6 +179,7 @@ void loop() {
 
   client.loop();
 }
+
 
 // Neues Wissen: Callback wird bei MQTT immer ausgeführt sobald eines der Abonierten Themen angesprochen wird. 
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -241,6 +237,8 @@ void wifi_connection() {
   Serial.println("Connected to WiFi");
   Serial.print("IP Address: ");
   Serial.println(WiFi.localIP());
+  Serial.println("");
+
 
   if (use_status_led) {
     digitalWrite(wlan_pin, HIGH);
@@ -262,7 +260,7 @@ void mqtt_connection() {
 
   while (!client.connected()) {
     Serial.print("Connecting as ");
-    Serial.println(device_id);
+    Serial.println(deviceId);
 
     if (use_status_led && millis() - lastToggle >= status_led_blink_time) {
       ledState = !ledState;
@@ -270,7 +268,7 @@ void mqtt_connection() {
       lastToggle = millis();
     }
 
-    if (client.connect(device_id.c_str(), mqtt_user, mqtt_pass)) {
+    if (client.connect(deviceId.c_str(), mqtt_user, mqtt_pass)) {
       Serial.println("Connected to MQTT!");
       if (use_status_led) {
         digitalWrite(mqtt_pin, HIGH);
@@ -286,4 +284,37 @@ void mqtt_connection() {
     }
     delay(50);
   }
+}
+
+// Generate Custom Device ID
+String getDeviceId() {
+  prefs.begin("device", false);
+
+  String id = prefs.getString("id", "");
+
+  if (id == "") {
+    uint8_t mac[6];
+    WiFi.macAddress(mac);
+
+    char buf[13];
+    sprintf(buf, "%02X%02X%02X%02X%02X%02X",
+            mac[0], mac[1], mac[2],
+            mac[3], mac[4], mac[5]);
+
+    id = String(buf);
+    prefs.putString("id", id);
+
+    Serial.println("Generated new Device ID");
+    Serial.print("Device ID: ");
+    Serial.println(id);
+    Serial.println("");
+  } else {
+    Serial.println("Loaded Device ID from NVS");
+    Serial.print("Device ID: ");
+    Serial.println(id);
+    Serial.println("");
+  }
+
+  prefs.end();
+  return id;
 }
