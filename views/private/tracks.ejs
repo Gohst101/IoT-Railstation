@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/tracks.css">
+  <%- include('../partials/blur') %>
     <title>Tracks</title>
 </head>
 <body>
-    <h1>Tracks</h1>
+
+<%- include('../partials/overlay') %>
+
+<main id="page-content" class="tracks-grid blur-target" aria-label="Track-Liste">
+  <article class="track-card track-card-create">
+    <button class="track-card-create-button" type="button" aria-label="Neuen Track erstellen">
+      <img class="track-card-create-icon" src="/img/icons/create.svg" alt="" aria-hidden="true">
+    </button>
+  </article>
+</main>
+
+
 </body>
 </html>

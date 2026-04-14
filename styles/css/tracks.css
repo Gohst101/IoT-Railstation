@@ -1,0 +1,185 @@
+@import url('/themes/dark.css'); /* Logik für Themes einbauen */
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.tracks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(280px, 380px));
+    width: fit-content;
+    max-width: 100%;
+    margin: 1rem auto;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+}
+
+.track-card {
+    height: 250px;
+    overflow: hidden;
+    border: 1px solid var(--box-stroke-color);
+    border-radius: 12px;
+    background-color: var(--box-color);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.24);
+}
+
+.track-card-create {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.track-card-create-button {
+    width: 58px;
+    height: 58px;
+    border: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.04);
+    cursor: pointer;
+    transition: transform 120ms ease, background-color 120ms ease;
+}
+
+.track-card-create-button:focus-visible {
+    outline: 2px solid var(--button-info-color);
+    outline-offset: 3px;
+}
+
+.track-card-create-icon {
+    width: 34px;
+    height: 34px;
+    display: block;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.track-card-preview {
+    margin: 0;
+    height: 195px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--box-stroke-color);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.track-card-preview-label {
+    margin: 0;
+    font-size: clamp(1rem, 1.2vw + 0.6rem, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    color: var(--text-color);
+}
+
+.track-card-bar {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.45rem 0.65rem;
+    background-color: var(--box-color);
+    border-top: 1px solid var(--box-stroke-color);
+}
+
+.track-card-title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.track-card-actions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 120ms ease, filter 120ms ease;
+}
+
+.btn-play {
+    background-color: color-mix(in srgb, var(--button-action-play-background) 10%, transparent);
+}
+
+.btn-edit {
+    background-color: color-mix(in srgb, var(--button-action-edit-background) 10%, transparent);
+}
+
+.btn-settings {
+    background-color: color-mix(in srgb, var(--button-action-settings-background) 10%, transparent);
+}
+
+.btn-delete {
+    background-color: color-mix(in srgb, var(--button-action-delete-background) 20%, transparent);
+}
+
+.icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 0 0 var(--text-color));
+}
+
+@media (max-width: 900px) {
+    .tracks-grid {
+        grid-template-columns: repeat(2, minmax(280px, 380px));
+    }
+
+    .track-card-title {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .tracks-grid {
+        width: 100%;
+        grid-template-columns: 1fr;
+        justify-content: stretch;
+        padding: 0.85rem;
+    }
+
+    .track-card-bar {
+        padding: 0.35rem 0.55rem;
+    }
+
+    .btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .track-card__create-button {
+        width: 54px;
+        height: 54px;
+    }
+
+    .track-card__create-icon {
+        width: 30px;
+        height: 30px;
+    }
+}
