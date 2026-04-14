@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,42 @@
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
+    <main class="login-container">
+        <form method="POST" action="/login" class="login-box" aria-labelledby="login-title">
+            <h1 class="login-title">Login</h1>
+
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="error-message" role="alert">
+                    <%= error %>
+                </div>
+            <% } %>
+
+            <div class="form-group">
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    placeholder="Benutzername"
+                    aria-label="Benutzername"
+                    autocomplete="username"
+                >
+            </div>
+
+            <div class="form-group">
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    placeholder="Passwort"
+                    aria-label="Passwort"
+                    autocomplete="current-password"
+                >
+            </div>
+
+            <button type="submit" class="submit-btn">Anmelden</button>
+        </form>
+    </main>
 </body>
 </html>
