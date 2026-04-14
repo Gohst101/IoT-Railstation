@@ -52,6 +52,7 @@ function startServer() {
 	app.use('/css', express.static(path.join(__dirname, 'styles/css')))
 	app.use('/js', express.static(path.join(__dirname, 'styles/js')))
 	app.use('/img', express.static(path.join(__dirname, 'styles/img')))
+	app.use('/themes', express.static(path.join(__dirname, 'styles/themes')))
 	app.use('/utils', express.static(path.join(__dirname, '/utils')))
 
 	// Session Middleware
