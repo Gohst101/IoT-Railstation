@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/css/track_create.css">
+
+
+<div id="modal-create-track" class="modal hidden">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Erstellen</h2>
+        </div>
+
+        <form class="modal-body" id="form-create-track" method="POST" action="/api/tracks">
+            <div class="form-group">
+                <label for="track-name">Streckenname</label>
+                <input type="text" id="track-name" name="name" required placeholder="Track 1">
+            </div>
+
+            <div class="form-group">
+                <label for="x-grid">X Grid</label>
+                <input type="number" id="x-grid" name="x-grid" required placeholder="5000" value="5000">
+            </div>
+
+            <div class="form-group">
+                <label for="y-grid">Y Grid</label>
+                <input type="number" id="y-grid" name="y-grid" required placeholder="5000" value="5000">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="track-create-btn-create">Erstellen</button>
+                <button type="button" class="track-create-btn-cancel" onclick="closeModal('modal-create-track')"><img src="/img/icons/cancel.svg" alt="Cancel"></button>
+            </div>
+        </form>
+    </div>
+</div>
