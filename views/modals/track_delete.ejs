@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="/css/track_delete.css">
+
+
+<div id="modal-delete-track" class="modal hidden">
+    <div class="modal-content modal-danger">
+        <div class="modal-header">
+            <h2>Strecke löschen</h2>
+        </div>
+
+        <div class="modal-body">
+            <p class="warning-text">Möchtest du die Strecke <strong id="delete-track-name"></strong> wirklich löschen?</p>
+            <p class="text-small">Diese Aktion kann nicht rückgängig gemacht werden.</p>
+        </div>
+
+        <div class="modal-actions">
+            <form id="form-delete-track" method="POST" action="/api/tracks/">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" id="delete-track-id" name="id">
+                
+                <button type="button" class="btn btn-secondary" onclick="closeModal('modal-delete-track')"><img src="/img/icons/cancel.svg" alt="Cancel"></button>
+                <button type="submit" class="btn btn-danger">Löschen</button>
+            </form>
+        </div>
+    </div>
+</div>
