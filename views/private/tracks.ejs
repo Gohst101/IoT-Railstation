@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/tracks.css">
-  <%- include('../partials/blur') %>
     <title>Tracks</title>
 </head>
 <body>
 
 <%- include('../partials/overlay') %>
 <%- include('../partials/blur') %>
+<%- include('../modals/track_create') %>
+<%- include('../modals/track_delete') %>
+
+
 
 <main id="page-content" class="tracks-grid blur-target" aria-label="Track-Liste">
   <article class="track-card track-card-create">
-    <button class="track-card-create-button" type="button" aria-label="Neuen Track erstellen">
+    <button onclick="openModal('modal-create-track')" class="track-card-create-button" type="button" aria-label="Neuen Track erstellen">
       <img class="track-card-create-icon" src="/img/icons/create.svg" alt="" aria-hidden="true">
     </button>
   </article>
 </main>
 
 <script src="/js/tracks.js"></script>
+<script src="/js/modals.js" defer></script>
 </body>
 </html>
