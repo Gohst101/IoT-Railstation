@@ -61,7 +61,7 @@ function createTrackCard(trackName, trackData) {
           </button>
         </li>
         <li>
-          <button class="btn btn-delete" type="button" title="Löschen">
+          <button class="btn btn-delete" onclick="openModal('modal-delete-track')" type="button" title="Löschen">
             <img class="icon" src="/img/icons/trash.svg" alt="Löschen">
           </button>
         </li>
