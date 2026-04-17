@@ -1,11 +1,33 @@
 (function (global) {
-	const DEFAULT_DURATION = 4500;
+	const DEFAULT_DURATION = 1000;
 	const TYPE_CONFIG = {
 		danger: { cssClass: "notification-error" },
 		warning: { cssClass: "notification-warning" },
 		success: { cssClass: "notification-success" },
 		info: { cssClass: "notification-info" },
 		general: { cssClass: "notification-info" }
+	};
+	const FLASH_MESSAGES = {
+		"login-success": {
+			title: "Login erfolgreich",
+			text: "Du bist jetzt angemeldet.",
+			type: "success"
+		},
+		"track-created": {
+			title: "Track erstellt",
+			text: "Der Track wurde angelegt.",
+			type: "success"
+		},
+		"track-deleted": {
+			title: "Track gelöscht",
+			text: "Der Track wurde entfernt.",
+			type: "success"
+		},
+		"track-error": {
+			title: "Aktion fehlgeschlagen",
+			text: "Die Track-Aktion konnte nicht abgeschlossen werden.",
+			type: "danger"
+		}
 	};
 
 	function escapeHtml(value) {
@@ -117,8 +139,29 @@
 		return notificationElement;
 	}
 
+	function showFlashNotificationFromUrl() {
+		const searchParams = new URLSearchParams(window.location.search);
+		const flashType = searchParams.get("notification");
+		if (!flashType || !Object.prototype.hasOwnProperty.call(FLASH_MESSAGES, flashType)) {
+			return;
+		}
+
+		const flashConfig = FLASH_MESSAGES[flashType];
+		const mainText = flashConfig.title;
+		const subText = searchParams.get("message") || flashConfig.text;
+		send(mainText, subText, flashConfig.type);
+
+		searchParams.delete("notification");
+		searchParams.delete("message");
+		const nextQuery = searchParams.toString();
+		const nextUrl = `${window.location.pathname}${nextQuery ? `?${nextQuery}` : ""}${window.location.hash}`;
+		window.history.replaceState({}, document.title, nextUrl);
+	}
+
 	global.notification = {
 		send: send,
 		close: removeNotification
 	};
+
+	showFlashNotificationFromUrl();
 })(globalThis);

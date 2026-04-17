@@ -1,3 +1,14 @@
+function buildRedirectUrl(targetPath, notificationType, message) {
+  const targetUrl = new URL(targetPath || '/dashboard', 'http://localhost');
+  targetUrl.searchParams.set('notification', notificationType);
+
+  if (message) {
+    targetUrl.searchParams.set('message', message);
+  }
+
+  return `${targetUrl.pathname}${targetUrl.search}${targetUrl.hash}`;
+}
+
 const handleLogin = (req, res) => {
   const { username, password } = req.body;
 
@@ -16,7 +27,9 @@ const handleLogin = (req, res) => {
       loginTime: new Date()
     };
     console.log(`[Auth] ✅ Admin '${username}' erfolgreich angemeldet`);
-    return res.redirect(req.session.returnTo || '/dashboard');
+    const redirectTarget = req.session.returnTo || '/dashboard';
+    delete req.session.returnTo;
+    return res.redirect(buildRedirectUrl(redirectTarget, 'login-success', 'Du bist jetzt angemeldet.'));
   }
 
   // Normal User Login
@@ -27,7 +40,9 @@ const handleLogin = (req, res) => {
       loginTime: new Date()
     };
     console.log(`[Auth] ✅ Benutzer '${username}' erfolgreich angemeldet`);
-    return res.redirect(req.session.returnTo || '/dashboard');
+    const redirectTarget = req.session.returnTo || '/dashboard';
+    delete req.session.returnTo;
+    return res.redirect(buildRedirectUrl(redirectTarget, 'login-success', 'Du bist jetzt angemeldet.'));
   }
 
   console.log(`[Auth] ❌ Gescheiterte Anmeldung für Benutzer: ${username}`);
