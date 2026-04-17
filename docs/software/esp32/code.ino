@@ -18,6 +18,14 @@ Daten die ich mitsenden möchte:
   
 }
 
+Status:
+{
+  "device_id": "ECE334B3AB68",
+  "ip_address": "192.168.2.121",
+  "version": "1.3.4",
+  "status": "running"
+}
+
 */
 
 
@@ -33,14 +41,16 @@ Daten die ich mitsenden möchte:
 
 Preferences prefs;
 
+unsigned long lastStatusSend = 0;
+const unsigned long statusInterval = 15000;
+
 // Einstellungen - Start
 // Wlan Informationen - INFO: Der ESP32 kann nur 2,4GH Unterstützen
-
 const char ssid[] = "";
 const char pass[] = "";
 
 // MQTT Server Informationen
-const char* mqtt_server = mqtt_broker_ip";
+const char* mqtt_server = "";
 const uint16_t mqtt_port = 1883;
 // Only if you have used Authenthication in the Mosquitto Setup
 const char* mqtt_user = "myuser";
@@ -60,11 +70,9 @@ String deviceId; // Wurde ersetzt!!! Wird später ersetzt siehe https://github.c
 #define status_pin 27
 #define wlan_pin 26
 #define mqtt_pin 12
-bool use_status_led = false; // 1 oder 0 - An oder Aus, ob diese Pins genutzt werden sollen oder nicht. Standart aus.
+bool use_status_led = true; // 1 oder 0 - An oder Aus, ob diese Pins genutzt werden sollen oder nicht. Standart aus.
 int status_led_blink_time = 500; // Schnelligkiet der LED Blink abstände. Standart 500ms - Passt ganz gut
 // Einstellungen - Ende
-
-
 
 // Wifi
 WiFiClient espClient;
@@ -172,7 +180,11 @@ void loop() {
 
   // Code - Start
 
-
+  // Status
+  if (millis() - lastStatusSend >= statusInterval) {
+    lastStatusSend = millis();
+    sendStatus();
+  }
 
 
   // Code - Ende
@@ -185,22 +197,75 @@ void loop() {
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.println("=== New MQTT Data ===");
 
-  Serial.print("Topic: ");
-  Serial.println(topic);
+  StaticJsonDocument<256> doc;
 
-  String message = "";
-  for (int i = 0; i < length; i++) {
-    message += (char)payload[i];
+  DeserializationError err = deserializeJson(doc, payload, length);
+  if (err) {
+    Serial.println("JSON Parse Error");
+    return;
   }
 
-  Serial.print("Length: ");
-  Serial.println(length);
+  const char* model = doc["model"];
 
-  Serial.print("Payload: ");
-  Serial.println(message);
+  if (model == nullptr) {
+    Serial.println("No model field");
+    return;
+  }
+
+  Serial.print("Model: ");
+  Serial.println(model);
+
+  // If abfrage nach den Verschiedenen Modulen
+  if (strcmp(model, "switch_2") == 0) {
+    track_switch(doc);
+  }
 
   Serial.println("=====================");
-  Serial.println();
+}
+
+// Switch (2 Tracks)
+void track_switch(StaticJsonDocument<256>& doc) {
+  Serial.println("Executing switch_2 logic");
+
+  const char* action = doc["action"];
+  const char* direction = doc["direction"];
+  int pin_left = doc["pin_left"];
+  int pin_right = doc["pin_right"];
+
+  // Code für Weichenstellung (Den einen Pin kurz auf an und dann direkt wieder aus um das Relay anzusteuern)
+  Serial.println("Richtung: ");
+  Serial.println(direction);
+  Serial.println("Pin Left: ");
+  Serial.println(pin_left);
+  Serial.println("Pin Right: ");
+  Serial.println(pin_right);
+
+
+  Serial.println("Switch executed");
+}
+
+
+// Status Senden
+void sendStatus() {
+  StaticJsonDocument<256> doc;
+
+  doc["device_id"] = deviceId;
+  doc["ip_address"] = WiFi.localIP().toString();
+  doc["version"] = "None";
+  doc["online"] = true;
+
+  doc["uptime_seconds"] = millis() / 1000;
+  doc["wifi_rssi"] = WiFi.RSSI();
+  doc["free_heap"] = ESP.getFreeHeap();
+
+  doc["status"] = "ready";
+
+  char buffer[256];
+  serializeJson(doc, buffer);
+
+  client.publish(topic_status.c_str(), buffer);
+
+  Serial.println("Status sent");
 }
 
 
