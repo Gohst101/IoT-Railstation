@@ -26,5 +26,11 @@
     --button-action-delete-background: #FF0000; /* 10% Transparent */
 
 
+    --notification-success-color: #1C7A00;
+    --notification-error-color: #7A0E00;
+    --notification-info-color: #004BC4;
+    --notification-warning-color: #C45F00;
+
+
     
 }
