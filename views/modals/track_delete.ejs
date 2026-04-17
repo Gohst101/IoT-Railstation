@@ -13,9 +13,8 @@
         </div>
 
         <div class="modal-actions">
-            <form id="form-delete-track" method="POST" action="/api/tracks/">
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" id="delete-track-id" name="id">
+            <form id="form-delete-track" method="POST" action="/api/tracks/delete">
+                <input type="hidden" id="delete-track-value" name="trackName">
                 
                 <button type="button" class="btn btn-secondary" onclick="closeModal('modal-delete-track')"><img src="/img/icons/cancel.svg" alt="Cancel"></button>
                 <button type="submit" class="btn btn-danger">Löschen</button>

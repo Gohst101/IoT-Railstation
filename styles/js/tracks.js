@@ -37,6 +37,7 @@ function createTrackCard(trackName, trackData) {
   card.className = 'track-card';
 
   const safeTrackName = escapeHtml(trackName);
+  const deleteAction = JSON.stringify(trackName);
 
   card.innerHTML = `
     <figure class="track-card-preview" aria-hidden="true">
@@ -61,7 +62,7 @@ function createTrackCard(trackName, trackData) {
           </button>
         </li>
         <li>
-          <button class="btn btn-delete" onclick="openModal('modal-delete-track')" type="button" title="Löschen">
+          <button class="btn btn-delete" onclick="openDeleteTrackModal(${deleteAction})" type="button" title="Löschen">
             <img class="icon" src="/img/icons/trash.svg" alt="Löschen">
           </button>
         </li>
@@ -80,6 +81,23 @@ function escapeHtml(value) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+function openDeleteTrackModal(trackName) {
+  const deleteTrackName = document.getElementById('delete-track-name');
+  const deleteTrackValue = document.getElementById('delete-track-value');
+
+  if (deleteTrackName) {
+    deleteTrackName.textContent = trackName;
+  }
+
+  if (deleteTrackValue) {
+    deleteTrackValue.value = trackName;
+  }
+
+  openModal('modal-delete-track');
+}
+
+window.openDeleteTrackModal = openDeleteTrackModal;
 
 // Error Handler
 function showError(message) {
