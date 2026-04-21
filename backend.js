@@ -9,13 +9,30 @@ require('dotenv').config()
 
 // MQTT - https://www.npmjs.com/package/mqtt#example
 const mqtt = require('mqtt')
+const { initMqtt } = require('./mqtt')
 // Use MQTT connection from environment (.env)
 const mqttUrl = process.env.MQTT_BROKER_URL || 'mqtt://test.mosquitto.org:1883'
 const mqttOptions = {}
-if (process.env.MQTT_USERNAME) mqttOptions.username = process.env.MQTT_USERNAME
-if (process.env.MQTT_PASSWORD) mqttOptions.password = process.env.MQTT_PASSWORD
+const mqttUsername = (process.env.MQTT_USERNAME || process.env.MQTT_USER || '').trim()
+const mqttPassword = (process.env.MQTT_PASSWORD || '').trim()
+
+if (mqttUsername) mqttOptions.username = mqttUsername
+if (mqttPassword) mqttOptions.password = mqttPassword
+if (!mqttOptions.connectTimeout) mqttOptions.connectTimeout = 5000
+if (!mqttOptions.reconnectPeriod) mqttOptions.reconnectPeriod = 3000
+
+if (mqttPassword && !mqttUsername) {
+	console.warn('[Startup Process] ⚠️ MQTT_PASSWORD is set but MQTT_USERNAME/MQTT_USER is missing. Broker auth may fail.')
+}
+
 const client = mqtt.connect(mqttUrl, mqttOptions);
+const mqttBridge = initMqtt(client)
 console.log(`[Startup Process] MQTT connecting to: ${mqttUrl}`)
+console.log(`[Startup Process] MQTT auth user: ${mqttUsername ? mqttUsername : 'none'}`)
+
+client.on('error', (error) => {
+	console.error('[Startup Process] MQTT connection error:', error.message)
+})
 
 const pem = require('pem')
 
@@ -23,9 +40,6 @@ const redirectsRoutes = require('./routes/redirects')
 const publicRoutes = require('./routes/public')
 const privateRoutes = require('./routes/private')
 const apiTracksRoutes = require('./api/tracks')
-// const apiSwitchRoutes = require('./mqtt/esp32/switch')
-// const apiSpeedRoutes = require('./mqtt/esp32/speed')
-
 
 
 // Console Logs for Fun
@@ -73,23 +87,8 @@ function startServer() {
 	console.log(`[Startup Process] ✅ Style Utils Finished`)
 
 	console.log(`[Startup Process] ⏳ Setting up MQTT Client..`)
-	startMQTT();
-
-function startMQTT() {
-	client.on("connect", () => {
-		client.subscribe("presence", (err) => {
-			if (!err) {
-			client.publish("presence", "Hello mqtt");
-			}
-		});
-	});
-
-	client.on("message", (topic, message) => {
-		// message is Buffer
-		console.log(`[MQTT] message on ${topic}: ${message.toString()}`);
-		// Keep client connected; do not call client.end() here.
-	});
-}
+	app.locals.mqtt = mqttBridge;
+	console.log(`[Startup Process] ✅ MQTT bridge initialized`)
 
 
 console.log(`[Startup Process] ⏳ Setting up API Endpoints..`)
