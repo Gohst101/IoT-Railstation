@@ -4,7 +4,7 @@ Dinge die ich machen möchte für den ESP32
 - Wlan Verbindung herstellen / Reconnect falls Verbindung Verloren ✅
 - MQTT Verbindung herstellen / Reconnect falls Verbindung Verloren ✅
 - ESP32 sendet Lebenszeichen an den Web Server über MQTT
-- 
+- Füge einen Weg hinzu um die laufzeit zu steuern -> Für /trigger - ???
 
 
 Routen:
@@ -50,7 +50,7 @@ const char ssid[] = "";
 const char pass[] = "";
 
 // MQTT Server Informationen
-const char* mqtt_server = "";
+const char* mqtt_server = "BrokerIP";
 const uint16_t mqtt_port = 1883;
 // Only if you have used Authenthication in the Mosquitto Setup
 const char* mqtt_user = "myuser";
@@ -232,6 +232,9 @@ void track_switch(StaticJsonDocument<256>& doc) {
   int pin_left = doc["pin_left"];
   int pin_right = doc["pin_right"];
 
+  pinMode(pin_left, OUTPUT);
+  pinMode(pin_right, OUTPUT);
+
   // Code für Weichenstellung (Den einen Pin kurz auf an und dann direkt wieder aus um das Relay anzusteuern)
   Serial.println("Richtung: ");
   Serial.println(direction);
@@ -239,7 +242,15 @@ void track_switch(StaticJsonDocument<256>& doc) {
   Serial.println(pin_left);
   Serial.println("Pin Right: ");
   Serial.println(pin_right);
-
+  if (strcmp(direction, "left") == 0) {
+    digitalWrite(pin_right, LOW);
+    digitalWrite(pin_left, HIGH);
+  } else if (strcmp(direction, "right") == 0) {
+    digitalWrite(pin_left, LOW);
+    digitalWrite(pin_right, HIGH);
+  } else {
+    Serial.println("ERROR => NO DIRECTION");
+  }
 
   Serial.println("Switch executed");
 }
