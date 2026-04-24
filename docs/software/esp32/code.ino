@@ -46,15 +46,15 @@ const unsigned long statusInterval = 15000;
 
 // Einstellungen - Start
 // Wlan Informationen - INFO: Der ESP32 kann nur 2,4GH Unterstützen
-const char ssid[] = "";
-const char pass[] = "";
+const char ssid[] = "BFIundETE";
+const char pass[] = "TechnikistTOP";
 
 // MQTT Server Informationen
-const char* mqtt_server = "BrokerIP";
+const char* mqtt_server = "192.168.178.21";
 const uint16_t mqtt_port = 1883;
 // Only if you have used Authenthication in the Mosquitto Setup
-const char* mqtt_user = "myuser";
-const char* mqtt_pass = "myuser";
+const char* mqtt_user = "admin";
+const char* mqtt_pass = "admin";
 
 
 // Hier die Device ID ändern. Am besten den ESP32 makieren um diesen nicht zu verwecheln.
@@ -334,6 +334,8 @@ void mqtt_connection() {
   bool ledState = false;
   unsigned long lastToggle = millis();
 
+  bool useAuth = strlen(mqtt_user) > 0;
+
   while (!client.connected()) {
     Serial.print("Connecting as ");
     Serial.println(deviceId);
@@ -344,7 +346,14 @@ void mqtt_connection() {
       lastToggle = millis();
     }
 
-    if (client.connect(deviceId.c_str(), mqtt_user, mqtt_pass)) {
+    bool connected;
+    if (useAuth) {
+      connected = client.connect(deviceId.c_str(), mqtt_user, mqtt_pass);
+    } else {
+      connected = client.connect(deviceId.c_str());
+    }
+
+    if (connected) {
       Serial.println("Connected to MQTT!");
       if (use_status_led) {
         digitalWrite(mqtt_pin, HIGH);
