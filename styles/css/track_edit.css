@@ -1,0 +1,102 @@
+@import url('/themes/dark.css'); /* Logik für Themes einbauen */
+
+#modal-edit-track {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#modal-edit-track .modal-content {
+    background-color: var(--box-color);
+    height: 340px;
+    width: min(400px, 100%);
+    border: 3px solid var(--box-stroke-color);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 100%;
+}
+
+.modal-header h2 {
+    background-color: var(--box-color);
+    font-weight: bolder;
+    color: var(--text-color);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.form-group input {
+    background-color: var(--box-color);
+    width: 100%;
+    padding: 10px;
+    margin: 1px 0;
+    box-sizing: border-box;
+    border-radius: 12px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+/* Box für 100% der Boxen Buttons */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+/* 20% width */
+.track-edit-btn-cancel {
+    background-color: var(--button-action-delete);
+    color: var(--text-color);
+    border: none;
+    flex: 1;
+    min-height: 42px;
+    padding: 6px 0;
+    cursor: pointer;
+    border-radius: 12px;
+    font-weight: bolder;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 80% width */
+.track-edit-btn-edit {
+    background-color: var(--button-action-play);
+    color: var(--text-color);
+    border: none;
+    flex: 4;
+    min-height: 42px;
+    padding: 6px 16px;
+    cursor: pointer;
+    border-radius: 12px;
+    font-weight: bolder;
+    font-size: 0.95rem;
+}
+
+.track-edit-btn-cancel img {
+    width: 20px;
+    height: 20px;
+}

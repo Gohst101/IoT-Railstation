@@ -37,7 +37,6 @@ function createTrackCard(trackName, trackData) {
   card.className = 'track-card';
 
   const safeTrackName = escapeHtml(trackName);
-  const deleteAction = JSON.stringify(trackName);
 
   card.innerHTML = `
     <figure class="track-card-preview" aria-hidden="true">
@@ -62,13 +61,42 @@ function createTrackCard(trackName, trackData) {
           </button>
         </li>
         <li>
-          <button class="btn btn-delete" onclick="openDeleteTrackModal(${deleteAction})" type="button" title="Löschen">
+          <button class="btn btn-delete" type="button" title="Löschen">
             <img class="icon" src="/img/icons/trash.svg" alt="Löschen">
           </button>
         </li>
       </ul>
     </div>
   `;
+
+  const playButton = card.querySelector('.btn-play');
+  const editButton = card.querySelector('.btn-edit');
+  const settingsButton = card.querySelector('.btn-settings');
+  const deleteButton = card.querySelector('.btn-delete');
+
+  if (playButton) {
+    playButton.addEventListener('click', () => {
+      window.location.href = `/track/${encodeURIComponent(trackName)}`;
+    });
+  }
+
+  if (editButton) {
+    editButton.addEventListener('click', () => {
+      window.location.href = `/track/${encodeURIComponent(trackName)}/edit`;
+    });
+  }
+
+  if (settingsButton) {
+    settingsButton.addEventListener('click', () => {
+      openEditTrackModal(trackName, trackData);
+    });
+  }
+
+  if (deleteButton) {
+    deleteButton.addEventListener('click', () => {
+      openDeleteTrackModal(trackName);
+    });
+  }
   
   return card;
 }
@@ -95,6 +123,35 @@ function openDeleteTrackModal(trackName) {
   }
 
   openModal('modal-delete-track');
+}
+
+function openEditTrackModal(trackName, trackData) {
+  const originalNameField = document.getElementById('edit-track-original-name');
+  const trackNameField = document.getElementById('edit-track-name');
+  const xGridField = document.getElementById('edit-x-grid');
+  const yGridField = document.getElementById('edit-y-grid');
+
+  const settings = Array.isArray(trackData) && trackData.length > 0
+    ? trackData[0]
+    : {};
+
+  if (originalNameField) {
+    originalNameField.value = trackName;
+  }
+
+  if (trackNameField) {
+    trackNameField.value = trackName;
+  }
+
+  if (xGridField) {
+    xGridField.value = settings.grid_X || 5000;
+  }
+
+  if (yGridField) {
+    yGridField.value = settings.grid_Y || 5000;
+  }
+
+  openModal('modal-edit-track');
 }
 
 window.openDeleteTrackModal = openDeleteTrackModal;

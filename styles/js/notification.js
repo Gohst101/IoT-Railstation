@@ -23,6 +23,11 @@
 			text: "Der Track wurde entfernt.",
 			type: "success"
 		},
+		"track-updated": {
+			title: "Track gespeichert",
+			text: "Der Track wurde aktualisiert.",
+			type: "success"
+		},
 		"track-error": {
 			title: "Aktion fehlgeschlagen",
 			text: "Die Track-Aktion konnte nicht abgeschlossen werden.",

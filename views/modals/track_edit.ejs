@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="/css/track_edit.css">
+
+
+<div id="modal-edit-track" class="modal hidden">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Track bearbeiten</h2>
+        </div>
+
+        <form class="modal-body" id="form-edit-track" method="POST" action="/api/tracks/edit">
+            <input type="hidden" id="edit-track-original-name" name="originalName">
+
+            <div class="form-group">
+                <label for="edit-track-name">Streckenname</label>
+                <input type="text" id="edit-track-name" name="name" required placeholder="Track 1">
+            </div>
+
+            <div class="form-group">
+                <label for="edit-x-grid">X Grid</label>
+                <input type="number" id="edit-x-grid" name="x-grid" required placeholder="5000" value="5000">
+            </div>
+
+            <div class="form-group">
+                <label for="edit-y-grid">Y Grid</label>
+                <input type="number" id="edit-y-grid" name="y-grid" required placeholder="5000" value="5000">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="track-edit-btn-edit">Speichern</button>
+                <button type="button" class="track-edit-btn-cancel" onclick="closeModal('modal-edit-track')"><img src="/img/icons/cancel.svg" alt="Cancel"></button>
+            </div>
+        </form>
+    </div>
+</div>
