@@ -4,13 +4,27 @@ const fs = require('fs');
 const path = require('path');
 const { checkUserLoggedIn } = require('../middleware/checkUserLoggedIn.js');
 
-// Private Routes - Nur für angemeldete Benutzer | Man checkt
+// Loads the Devices from the Storage Device Directory
+function loadDeviceDirectory() {
+  const deviceDirectoryPath = path.join(__dirname, '..', 'storage', 'application', 'device_directory.json');
 
+  try {
+    const fileContent = fs.readFileSync(deviceDirectoryPath, 'utf8');
+    const parsedContent = JSON.parse(fileContent);
+
+    return Array.isArray(parsedContent) ? parsedContent : [];
+  } catch (error) {
+    console.error('[Private Routes] Failed to load device directory:', error.message);
+    return [];
+  }
+}
+
+// Private Routes - Nur für angemeldete Benutzer | Man checkt
 router.get('/dashboard', checkUserLoggedIn, (req, res) => {
   res.render('private/dashboard', { user: req.session.user });
 });
 
-// Tracks - INFO: Later add Loading Tracks via JSON Storage!!!
+// Tracks
 router.get('/tracks', checkUserLoggedIn, (req, res) => {
   res.render('private/tracks', { user: req.session.user });
 });
@@ -29,9 +43,14 @@ router.get('/track/:trackname/edit', checkUserLoggedIn, (req, res) => {
   });
 });
 
-// Device Overview - INFO: Later add Loading Devices from via JSON Storage!!!
+// Device Overview
 router.get('/devices', checkUserLoggedIn, (req, res) => {
-  res.render('private/device_overview', { user: req.session.user });
+  const devices = loadDeviceDirectory();
+
+  res.render('private/device_overview', {
+    user: req.session.user,
+    devices
+  });
 });
 
 module.exports = router;
