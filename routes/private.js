@@ -15,5 +15,9 @@ router.get('/tracks', checkUserLoggedIn, (req, res) => {
   res.render('private/tracks', { user: req.session.user });
 });
 
+// Device Overview - INFO: Later add Loading Devices from via JSON Storage!!!
+router.get('/devices', checkUserLoggedIn, (req, res) => {
+  res.render('private/device_overview', { user: req.session.user });
+});
 
 module.exports = router;
