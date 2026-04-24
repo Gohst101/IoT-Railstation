@@ -18,9 +18,10 @@
 
     <main>
         <div class="action-bar-container">
+            <!-- https://www.w3schools.com/howto/howto_js_filter_table.asp -->
             <div class="search-bar">
                 <img src="/img/icons/search.svg" alt="Search Icon">
-                <input id="search-query" type="text">
+                <input type="text" id="input" onkeyup="search_devices()" placeholder="Suchen...">
             </div>
             <div class="filter">
                 <button class="active">Alle (<%= totalDevices %>)</button>
@@ -32,7 +33,7 @@
             </div>
         </div>
 
-        <table class="device_container">
+        <table id="device_table" class="device_container">
             <thead>
                 <tr>
                     <th>ALIAS</th>
@@ -64,6 +65,7 @@
         </table>
     </main>
 
+    <script src="/js/search.js" defer></script>
     <script src="/js/notification.js" defer></script>
 </body>
 </html>
