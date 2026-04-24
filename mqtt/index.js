@@ -34,7 +34,7 @@ function initMqtt(client) {
     console.log(`[MQTT] Message received on ${topic}`);
 
     if (topic.endsWith('/status')) {
-      handleHeartbeat(message);
+      handleHeartbeat(topic, message);
       return;
     }
 

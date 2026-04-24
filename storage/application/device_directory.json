@@ -2,8 +2,25 @@
   {
     "alias": "Unknown device",
     "device_id": "ECE334B3AB68",
-    "ip_address": "192.168.178.22",
+    "ip_address": "192.168.178.27",
     "version": "None",
-    "last_seen": "21.04.2026 - 14:45:01"
+    "online": true,
+    "uptime_seconds": 505,
+    "wifi_rssi": -71,
+    "free_heap": 2202,
+    "status": "ready",
+    "last_seen": "24.04.2026 - 11:09:01"
+  },
+  {
+    "ip_address": "192.168.178.27",
+    "version": "None",
+    "online": true,
+    "uptime_seconds": 505,
+    "wifi_rssi": -71,
+    "free_heap": 2202,
+    "status": "ready",
+    "alias": "Unknown device",
+    "device_id": "ECE334B3AB67",
+    "last_seen": "24.04.2026 - 11:08:23"
   }
 ]
