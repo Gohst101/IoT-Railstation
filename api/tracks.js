@@ -139,5 +139,82 @@ router.post('/delete', (req, res) => {
 	}
 });
 
+router.post('/edit', (req, res) => {
+	try {
+		if (!fs.existsSync(tracksDir)) {
+			return redirectWithNotification(
+				res,
+				'/tracks',
+				'track-error',
+				'Der Track-Speicher wurde nicht gefunden.'
+			);
+		}
+
+		const originalName = sanitizeTrackName(req.body.originalName);
+		const updatedName = sanitizeTrackName(req.body.name || originalName);
+		const gridX = String(req.body['x-grid'] || '5000');
+		const gridY = String(req.body['y-grid'] || '5000');
+
+		const originalFilePath = path.join(tracksDir, `${originalName}.json`);
+		const updatedFilePath = path.join(tracksDir, `${updatedName}.json`);
+
+		if (!fs.existsSync(originalFilePath)) {
+			return redirectWithNotification(
+				res,
+				'/tracks',
+				'track-error',
+				`Der Track "${originalName}" wurde nicht gefunden.`
+			);
+		}
+
+		if (originalName !== updatedName && fs.existsSync(updatedFilePath)) {
+			return redirectWithNotification(
+				res,
+				'/tracks',
+				'track-error',
+				`Der Track "${updatedName}" existiert bereits.`
+			);
+		}
+
+		const rawData = fs.readFileSync(originalFilePath, 'utf8');
+		const parsedData = JSON.parse(rawData);
+		const trackData = Array.isArray(parsedData) ? parsedData : [];
+
+		if (trackData.length > 0 && trackData[0] && typeof trackData[0] === 'object' && !Array.isArray(trackData[0])) {
+			trackData[0] = {
+				...trackData[0],
+				grid_X: gridX,
+				grid_Y: gridY
+			};
+		} else {
+			trackData.unshift({
+				grid_X: gridX,
+				grid_Y: gridY
+			});
+		}
+
+		fs.writeFileSync(updatedFilePath, JSON.stringify(trackData, null, 2), 'utf8');
+
+		if (originalName !== updatedName) {
+			fs.unlinkSync(originalFilePath);
+		}
+
+		return redirectWithNotification(
+			res,
+			'/tracks',
+			'track-updated',
+			`Der Track "${updatedName}" wurde gespeichert.`
+		);
+	} catch (error) {
+		console.error('[API] Fehler beim Bearbeiten des Tracks:', error);
+		return redirectWithNotification(
+			res,
+			'/tracks',
+			'track-error',
+			'Der Track konnte nicht gespeichert werden.'
+		);
+	}
+});
+
 
 module.exports = router;

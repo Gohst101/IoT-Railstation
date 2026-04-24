@@ -15,6 +15,20 @@ router.get('/tracks', checkUserLoggedIn, (req, res) => {
   res.render('private/tracks', { user: req.session.user });
 });
 
+router.get('/track/:trackname', checkUserLoggedIn, (req, res) => {
+  res.render('private/track', {
+    user: req.session.user,
+    trackName: req.params.trackname
+  });
+});
+
+router.get('/track/:trackname/edit', checkUserLoggedIn, (req, res) => {
+  res.render('private/track_edit', {
+    user: req.session.user,
+    trackName: req.params.trackname
+  });
+});
+
 // Device Overview - INFO: Later add Loading Devices from via JSON Storage!!!
 router.get('/devices', checkUserLoggedIn, (req, res) => {
   res.render('private/device_overview', { user: req.session.user });
