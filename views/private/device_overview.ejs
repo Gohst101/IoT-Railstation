@@ -12,9 +12,65 @@
     <%- include('../partials/overlay') %>
     <%- include('../partials/blur') %>
 
+    <main>
+        <div class="action-bar-container">
+            <div class="search-bar">
+                <img src="/img/icons/search.svg" alt="Search Icon">
+                <input id="search-query" type="text">
+            </div>
+            <div class="filter">
+                <button class="active">Alle (4)</button>
+                <button>Online (3)</button>
+                <button>Offline (1)</button>
+            </div>
+            <div class="refresh">
+                <button>Neu laden</button>
+            </div>
+        </div>
 
-    <h1>Device Overview</h1>
-
+        <table class="device_container">
+            <tr>
+                <th>ALIAS</th>
+                <th>DEVICE ID</th>
+                <th>IP ADRESSE</th>
+                <th>STATUS</th>
+                <th>VERSION</th>
+                <th>LAST SEEN</th>
+            </tr>
+            <tr>
+                <td>Weiche Nord</td>
+                <td>ECE334B3AB68</td>
+                <td>192.168.2.113</td>
+                <td>Status</td>
+                <td>1.1.4-beta</td>
+                <td>15.04.202 - 23:43:51</td>
+            </tr>
+            <tr>
+                <td>Weiche Süd</td>
+                <td>ECE334B3AB68</td>
+                <td>192.168.2.190</td>
+                <td>Status</td>
+                <td>1.1.4-beta</td>
+                <td>15.04.202 - 23:43:51</td>
+            </tr>
+            <tr>
+                <td>Weiche Tunnel</td>
+                <td>ECE334B3AB68</td>
+                <td>192.168.2.131</td>
+                <td>Status</td>
+                <td>1.1.4-beta</td>
+                <td>15.04.202 - 23:43:51</td>
+            </tr>
+            <tr>
+                <td>Weiche Brücke</td>
+                <td>ECE334B3AB68</td>
+                <td>192.168.2.119</td>
+                <td>Status</td>
+                <td>1.1.4-beta</td>
+                <td>15.04.202 - 23:43:51</td>
+            </tr>
+        </table>
+    </main>
 
     <script src="/js/notification.js" defer></script>
 </body>
